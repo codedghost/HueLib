@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using HueLib.Helper;
 using HueLib.RequestModels;
+using HueLib.ResponseModels;
+using HueLib.ResponseModels.ChildModels;
+using Newtonsoft.Json;
 
 namespace HueLib
 {
@@ -18,16 +22,20 @@ namespace HueLib
             };
         }
 
-        public async Task<string> GetUsername()
+        public async Task<string> GetUsername(string applicationName, string deviceName)
         {
             var result = await _hueClient.PostAsync("/api", HttpClientHelper.GetJsonData(new GetUsernameRequest
             {
-                devicetype = "my_hue_app#iphone sean"
+                devicetype = $"{applicationName}#{deviceName}"
             }));
 
             var jsonResult = await result.Content.ReadAsStringAsync();
 
-            return jsonResult;
+            var response = JsonConvert.DeserializeObject<UsernameSuccess>(jsonResult);
+
+            if (response == null || string.IsNullOrWhiteSpace(response.username)) return string.Empty;
+
+            return response.username;
         }
     }
 }

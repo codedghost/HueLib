@@ -1,6 +1,6 @@
 ﻿namespace HueLib.ResponseModels.ChildModels
 {
-    public class Success
+    public class UsernameSuccess
     {
         public string username { get; set; }
     }

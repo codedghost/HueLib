@@ -16,7 +16,7 @@ namespace HueLib
 {
     public static class LocateHueBridgeIp
     {
-        public static List<string> GetBridgeIp()
+        public static List<string> GetBridgeIpAddresses()
         {
             // Attempt to check meethue.com first as this will be a much faster check.
             var discoveryCheck = DiscoveryMeetHueCheck();
